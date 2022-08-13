@@ -25,3 +25,4 @@ The following types are supported:
 - string
 - int
 - []string
+- bool

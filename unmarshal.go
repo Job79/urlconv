@@ -24,6 +24,7 @@
 //   - string
 //   - int
 //   - []string
+//   - bool
 package urlconv
 
 import (
@@ -68,6 +69,10 @@ func Unmarshal(values url.Values, s any) {
 				}
 			case []string:
 				result.Set(reflect.ValueOf(values[key]))
+			case bool:
+				if b, err := strconv.ParseBool(values.Get(key)); err == nil {
+					result.SetBool(b)
+				}
 			default:
 				// because this is an error that doesn't depend on user input and
 				// occurs every time it is run on the given struct, we just panic.

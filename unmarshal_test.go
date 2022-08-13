@@ -9,6 +9,7 @@ type test struct {
 	String string   `url:"S"`
 	Int    int      `url:"I"`
 	Array  []string `url:"A"`
+	Bool   bool     `url:"B"`
 }
 
 // TestUnmarshal tests whether the unmarshal function works correctly
@@ -17,6 +18,7 @@ func TestUnmarshal(t *testing.T) {
 		"S": []string{"string"},
 		"I": []string{"1"},
 		"A": []string{"a", "b"},
+		"B": []string{"true"},
 	}
 
 	var s test
@@ -28,5 +30,7 @@ func TestUnmarshal(t *testing.T) {
 		t.Errorf("Int = %d, want 1", s.Int)
 	} else if len(s.Array) != 2 {
 		t.Errorf("Array = %v, want [a b]", s.Array)
+	} else if s.Bool != true {
+		t.Errorf("Bool = %v, want [true]", s.Bool)
 	}
 }
