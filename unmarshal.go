@@ -23,6 +23,7 @@
 // The following types are supported:
 //   - string
 //   - int
+//   - float64
 //   - []string
 //   - bool
 //   - time.Time
@@ -68,6 +69,10 @@ func Unmarshal(values url.Values, s any) {
 			case int:
 				if i, err := strconv.ParseInt(values.Get(key), 10, 64); err == nil {
 					result.SetInt(i)
+				}
+			case float64:
+				if f, err := strconv.ParseFloat(values.Get(key), 64); err == nil {
+					result.SetFloat(f)
 				}
 			case []string:
 				result.Set(reflect.ValueOf(values[key]))

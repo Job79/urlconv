@@ -24,6 +24,7 @@ and is required. Only public structs and fields can be mapped.
 The following types are supported:
 - string
 - int
+- float64
 - []string
 - bool
 - time.Time
