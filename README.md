@@ -26,3 +26,4 @@ The following types are supported:
 - int
 - []string
 - bool
+- time.Time

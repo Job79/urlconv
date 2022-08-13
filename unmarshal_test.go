@@ -3,13 +3,15 @@ package urlconv
 import (
 	"net/url"
 	"testing"
+	"time"
 )
 
 type test struct {
-	String string   `url:"S"`
-	Int    int      `url:"I"`
-	Array  []string `url:"A"`
-	Bool   bool     `url:"B"`
+	String string    `url:"S"`
+	Int    int       `url:"I"`
+	Array  []string  `url:"A"`
+	Bool   bool      `url:"B"`
+	Time   time.Time `url:"T"`
 }
 
 // TestUnmarshal tests whether the unmarshal function works correctly
@@ -19,6 +21,7 @@ func TestUnmarshal(t *testing.T) {
 		"I": []string{"1"},
 		"A": []string{"a", "b"},
 		"B": []string{"true"},
+		"T": []string{"2016-01-01T00:00:00Z"},
 	}
 
 	var s test
@@ -32,5 +35,7 @@ func TestUnmarshal(t *testing.T) {
 		t.Errorf("Array = %v, want [a b]", s.Array)
 	} else if s.Bool != true {
 		t.Errorf("Bool = %v, want [true]", s.Bool)
+	} else if s.Time != time.Date(2016, 1, 1, 0, 0, 0, 0, time.UTC) {
+		t.Errorf("Time = %v, want [2016-01-01T00:00:00Z]", s.Time)
 	}
 }

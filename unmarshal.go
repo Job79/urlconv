@@ -25,6 +25,7 @@
 //   - int
 //   - []string
 //   - bool
+//   - time.Time
 package urlconv
 
 import (
@@ -32,6 +33,7 @@ import (
 	"net/url"
 	"reflect"
 	"strconv"
+	"time"
 )
 
 // Unmarshal maps the given url.Values into a struct
@@ -73,10 +75,10 @@ func Unmarshal(values url.Values, s any) {
 				if b, err := strconv.ParseBool(values.Get(key)); err == nil {
 					result.SetBool(b)
 				}
-			default:
-				// because this is an error that doesn't depend on user input and
-				// occurs every time it is run on the given struct, we just panic.
-				panic(fmt.Errorf("urlconv: type of field '%s' is not supported", key))
+			case time.Time:
+				if t, err := time.Parse(time.RFC3339, values.Get(key)); err == nil {
+					result.Set(reflect.ValueOf(t))
+				}
 			}
 		}
 	}
